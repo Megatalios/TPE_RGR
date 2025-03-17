@@ -152,7 +152,7 @@ def run_experiment(num_items_list, variation_coef_list, large_items_ratio_list, 
                 for standard_ratio in standard_ratio_list:
                     y_values = []
                     for i in range(100):
-                        weights = generate_weights(variation_coef, large_items_ratio, standard_ratio, backpack_capacity)
+                        weights, _ = generate_weights(num_items, variation_coef, large_items_ratio, standard_ratio, backpack_capacity)
                         result = first_fit(weights, backpack_capacity)
                         y_values.append(result)
                     result_list.append([num_items, variation_coef, large_items_ratio, standard_ratio, sum(y_values)/len(y_values)])
