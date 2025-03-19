@@ -57,7 +57,22 @@ def first_fit(weights, capacity):
 
 
 def generate_weights(num_items, distribution_code, large_items_ratio, standard_ratio, backpack_capacity):
-    """Генерирует случайную последовательность весов предметов с заданными параметрами."""
+    """Генерирует случайную последовательность весов предметов с заданными параметрами.
+
+    Args:
+        num_items: Количество предметов.
+        distribution_code: Кодированное значение закона распределения
+        large_items_ratio: Доля "крупных" предметов (вес >= 0.6 * backpack_capacity).
+        standard_ratio: Доля "стандартных" весов (делятся на 5).
+        backpack_capacity: Вместимость рюкзака.
+        
+    Returns:
+        - Список весов предметов.
+        - Словарь с вычисленными показателями:
+            - "num_items": Количество предметов.
+            - "large_items_ratio": Фактическая доля "крупных" предметов.
+            - "standard_ratio": Фактическая доля "стандартных" предметов.
+    """
     mean_value = backpack_capacity // 2
     weights = []
 
@@ -120,7 +135,18 @@ def generate_weights(num_items, distribution_code, large_items_ratio, standard_r
 
 
 def run_experiment(num_items_list, distribution_code_list, large_items_ratio_list, standard_ratio_list, backpack_capacity):
-    """Проводит серию экспериментов для заданных значений, а затем возвращает итоговую таблицу."""
+    """Проводит серию экспериментов для заданных значений, а затем возвращает итоговую таблицу.
+    
+    Args:
+        num_items_list: Список с уровнями количества весов
+        distribution_code_list: Список с уровнями законов распределения
+        large_items_ratio_list: Список с уровнями долей крупных элементов
+        standard_ratio_list: Список с уровнями долей стандартных элементов
+        backpack_capacity: Загруженность рюкзака
+        
+    Returns:
+        Количество рюкзаков, которые необходимо для упаковки всех весов
+    """
     result_list = []
     for num_items in num_items_list:
         for distribution_code in distribution_code_list:
@@ -136,7 +162,13 @@ def run_experiment(num_items_list, distribution_code_list, large_items_ratio_lis
 
 
 def save_to_excel(result_list, filename="experiment_results.xlsx"):
-    """Сохраняет результаты эксперимента в Excel файл."""
+    """Сохраняет результаты эксперимента в Excel файл.
+    Args:
+        result_list: Список с данными, который необходимо записать
+        filename: Название выходного файла
+    Returns:
+        Сохраняет файл, но в качестве данных ничего не возвращает
+    """
     df = pd.DataFrame(result_list, columns=["Количество предметов", "Закон распределения", "Доля \"крупных\" предметов", "Доля \"стандартных\" предметов", "Количество рюкзаков"])
     df.to_excel(filename, index=False)
     print(f"Результаты сохранены в {filename}")
